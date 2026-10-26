@@ -27,6 +27,8 @@ salary_data.json
 **/job_scraper/seen_jobs.json
 **/job_scraper/notion_sync.json
 **/job_scraper/*.md
+# BOSS browser profile, login credentials, complete JD snapshots, session lock
+**/job_scraper/boss/
 *_BehavioralReport.pdf
 linkedin_Profile.pdf
 

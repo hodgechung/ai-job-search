@@ -72,6 +72,15 @@ For each **enabled** portal skill:
 
 Run all portal CLI calls in parallel where possible using the Agent tool. Collect all `results` arrays into a single pool for Step 2, keeping each result tagged with its source portal skill (for Step 2 `detail` lookups).
 
+**Browser-backed portals:** follow their skill's login instructions. For `boss-search`, run
+queries sequentially (one persistent browser profile), use `--no-wait` in batch calls,
+and stop that portal on `LOGIN_REQUIRED`/`VERIFICATION_REQUIRED`/`SESSION_BUSY` rather
+than retrying in parallel or treating it as an empty result. Tell the user how to run
+its `login` command, then resume once authenticated. Do not health-probe or WebSearch
+around an authentication/security gate. Search already saves complete local JDs;
+`detail --cached-only` reads them without opening a browser. Unknown publication dates
+stay null and must be reported as freshness unknown, not as posted today.
+
 If a CLI tool exits with a non-zero code, log the error message and continue — do not abort the whole search.
 
 #### 1c. WebSearch fallback

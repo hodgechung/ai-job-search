@@ -69,6 +69,16 @@ The framework encodes career guidance best practices, including structured evalu
 
 ## Quick start
 
+**China / BOSS直聘 (experimental):** a local-browser, read-only adapter is available.
+It saves login state and complete job descriptions for later ranking. From the repo
+root, run `bun run .agents/skills/boss-search/cli/src/cli.ts login` to open the QR
+login page once. Complete login manually, run
+`bun run .agents/skills/boss-search/cli/src/cli.ts status`, then
+`bun run .agents/skills/boss-search/cli/src/cli.ts search -q "Python" -l "上海" --limit 3 --format table`.
+Claude Code also supports `/boss login` and `/boss Python 上海`. The adapter is enabled
+for `/scrape` discovery after a live login/search/full-JD smoke test on 2026-10-22. See the
+[BOSS guide](.agents/skills/boss-search/cli/README.md) for setup and limitations.
+
 > 🎥 **Prefer to see it in action first?** [The Next New Thing did a hands-on walkthrough](https://www.youtube.com/watch?v=HoVxjMNFYv4) of how the workflow is actually used, from setup to a finished application (recorded August 2026 - commands may have evolved since).
 
 ### 1. Fork and clone

@@ -10,7 +10,13 @@ You retrieve a single job posting for the `/apply` workflow and hand back what t
 
 **Fetch** using the escalation order in `.claude/skills/job-application-assistant/09-web-research.md`: installed portal CLI `detail` when the host matches a portal under `.agents/skills/` (discover them with Glob on `.agents/skills/*/SKILL.md` and read the board hosts there), then `WebFetch`, then `python3 tools/fetch_page.py '<URL>' --out "${SCRATCHPAD:?set this to the session scratchpad directory from your system prompt}/page.html"` (it enforces `robots.txt` itself; exit 1 means skip to the next rung), then `WebSearch` for the employer's own careers posting. Stop at the first rung that yields the actual posting; a listing page, a login wall, or a title alone is not a posting.
 
-**Gate** whatever you retrieved before reading it as content, with `tools/posting_guard.py`:
+**BOSS snapshots:** for a BOSS URL, use `boss-search detail <url> --cached-only --format plain` first.
+Retain the snapshot capture timestamp in your return. If no snapshot exists, report
+`CACHE_MISS` to the parent so it can run an interactive capture; do not open a login
+browser from this read-only fetcher or silently treat an old snapshot as live.
+
+**Gate** whatever you retrieved before reading it as content, with `tools/posting_guard.py`.
+Run the gate on cached bodies exactly as on live portal output:
 - portal CLI: `bun run .agents/skills/<portal>/cli/src/cli.ts detail '<URL>' --format plain | python3 tools/posting_guard.py --text --json`
 - `fetch_page.py` output: `python3 tools/posting_guard.py --in "${SCRATCHPAD:?}/page.html" --html --json`
 - `WebFetch` output (markdown in your context): `python3 tools/posting_guard.py --text --json <<'POSTING'` ... `POSTING`
