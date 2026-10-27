@@ -29,6 +29,8 @@ salary_data.json
 **/job_scraper/*.md
 # BOSS browser profile, login credentials, complete JD snapshots, session lock
 **/job_scraper/boss/
+# Shared browser sessions and per-portal JD snapshots for additional China portals
+**/job_scraper/china-portals/
 *_BehavioralReport.pdf
 linkedin_Profile.pdf
 

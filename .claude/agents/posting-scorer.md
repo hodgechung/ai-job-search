@@ -12,7 +12,8 @@ You triage a batch of job postings for the `/rank` workflow. The orchestrator's 
 
 **Gate** every retrieved body with `tools/posting_guard.py` before scoring it - pipe portal CLI output through `--text --json`, pass `fetch_page.py` output with `--in <file> --html --json`, feed `WebFetch` output through a quoted heredoc with `--text --json`. Score from the **cleaned** text. Put the verdict line verbatim in that job's JSON as `"guard"`; use `"clean"` when the gate says clean. A flagged posting is still scored; the flag is for the user.
 
-For BOSS URLs, first use `boss-search detail <url> --cached-only --format plain`.
+For BOSS, 猎聘, 智联 or 前程无忧 URLs, use the matching `boss-search`, `liepin-search`,
+`zhaopin-search` or `51job-search` CLI with `detail <url> --cached-only --format plain`.
 This returns the locally captured complete JD and its capture timestamp, not a live
 availability check. Apply the same integrity gate to this text. On `CACHE_MISS`, report
 that the parent needs to capture the JD; do not start a login browser from a parallel

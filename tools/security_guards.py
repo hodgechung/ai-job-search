@@ -66,6 +66,9 @@ ALLOWED_PERMISSIONS = {
     "Bash(bun run .agents/skills/linkedin-search/cli/src/cli.ts:*)",
     "Bash(bun run .agents/skills/freehire-search/cli/src/cli.ts:*)",
     "Bash(bun run .agents/skills/boss-search/cli/src/cli.ts:*)",
+    "Bash(bun run .agents/skills/liepin-search/cli/src/cli.ts:*)",
+    "Bash(bun run .agents/skills/zhaopin-search/cli/src/cli.ts:*)",
+    "Bash(bun run .agents/skills/51job-search/cli/src/cli.ts:*)",
     "Bash(python salary_lookup.py:*)",
     "Bash(python3 salary_lookup.py:*)",
     "Bash(python tools/rank_state.py:*)",
@@ -147,6 +150,7 @@ REQUIRED_DENY_RULES = [
 # Personal-data ignore rules that must never disappear from .gitignore.
 REQUIRED_IGNORE_RULES = [
     "**/job_scraper/boss/",
+    "**/job_scraper/china-portals/",
     "salary_data.json",
     # Depth-independent: the job-scraper skill resolves `job_scraper/` relative
     # to its own directory, so the state file lands under .claude/skills/... and

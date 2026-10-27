@@ -72,14 +72,18 @@ For each **enabled** portal skill:
 
 Run all portal CLI calls in parallel where possible using the Agent tool. Collect all `results` arrays into a single pool for Step 2, keeping each result tagged with its source portal skill (for Step 2 `detail` lookups).
 
-**Browser-backed portals:** follow their skill's login instructions. For `boss-search`, run
-queries sequentially (one persistent browser profile), use `--no-wait` in batch calls,
+**China portals:** public jobs do not require prior login. 智联 uses anonymous public
+HTML; 猎聘 and 前程无忧 use `open` to start a dedicated browser. For `boss-search`,
+`liepin-search`, `zhaopin-search` and `51job-search`, run queries sequentially,
+use `--no-wait` in batch calls,
 and stop that portal on `LOGIN_REQUIRED`/`VERIFICATION_REQUIRED`/`SESSION_BUSY` rather
 than retrying in parallel or treating it as an empty result. Tell the user how to run
-its `login` command, then resume once authenticated. Do not health-probe or WebSearch
+the manual handoff described in its skill, then resume after the gate clears. Do not health-probe or WebSearch
 around an authentication/security gate. Search already saves complete local JDs;
 `detail --cached-only` reads them without opening a browser. Unknown publication dates
-stay null and must be reported as freshness unknown, not as posted today.
+stay null and must be reported as freshness unknown, not as posted today. BOSS has
+its own profile; the other three share one separate profile and browser lock.
+Honor each skill's enabled flag: an implemented but unverified portal stays disabled.
 
 If a CLI tool exits with a non-zero code, log the error message and continue — do not abort the whole search.
 

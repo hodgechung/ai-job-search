@@ -20,14 +20,15 @@ This rule is the input side of the Step 3 Factual Grounding Audit, not a competi
 
 ## Step 0: Parse Input
 
-For a BOSS URL, first check its complete local snapshot with
-`bun run .agents/skills/boss-search/cli/src/cli.ts detail <url> --cached-only --format json`.
+For a BOSS, 猎聘, 智联 or 前程无忧 URL, choose the matching `boss-search`,
+`liepin-search`, `zhaopin-search` or `51job-search` skill, then check its complete snapshot with
+`bun run .agents/skills/<skill>/cli/src/cli.ts detail <url> --cached-only --format json`.
 On `CACHE_MISS`, the parent can capture it with the same command without
-`--cached-only` before dispatching the fetcher. Follow boss-search's manual login
+`--cached-only` before dispatching the fetcher. Follow that portal's manual login
 handoff once, leaving the browser undisturbed while the user scans. Only the parent
 opens the login browser; the read-only posting-fetcher uses the saved snapshot.
 Preserve the capture timestamp and do not claim it proves current availability.
-Other BOSS access/verification errors must be surfaced, not retried around the gate.
+Other portal access/verification errors must be surfaced, not retried around the gate.
 
 - If `$ARGUMENTS` looks like a URL, **dispatch the `posting-fetcher` agent** via the Agent tool (`subagent_type: posting-fetcher`, the shipped definition in `.claude/agents/posting-fetcher.md`: it can read and fetch but not edit or write, so the component that touches the raw web page has no way to act on it). Pass it the URL only - no profile data, no pasted posting text. It discovers installed portals itself, follows the escalation order below, runs `tools/posting_guard.py` on whatever it retrieved, and returns the gate's verdict, its findings, the extracted metadata and the **cleaned posting text**. The escalation order it applies, from `.claude/skills/job-application-assistant/09-web-research.md`:
   - **Portal CLI first:** If the URL's host matches an installed portal skill in `.agents/skills/` (derived from the board hosts in `.agents/skills/*/cli/src` and `url-reference.md`, e.g. `linkedin.com` -> `linkedin-search`), run that CLI's `detail` command first:

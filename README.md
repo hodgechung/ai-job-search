@@ -79,6 +79,17 @@ Claude Code also supports `/boss login` and `/boss Python 上海`. The adapter i
 for `/scrape` discovery after a live login/search/full-JD smoke test on 2026-10-22. See the
 [BOSS guide](.agents/skills/boss-search/cli/README.md) for setup and limitations.
 
+**More China portals:** [猎聘](.agents/skills/liepin-search/SKILL.md) is enabled after
+a live Hangzhou Java search, full-description capture and cached-detail test on
+2026-10-26. Its search uses the local browser; details use the site's public HTML.
+[智联](.agents/skills/zhaopin-search/SKILL.md) and
+[前程无忧](.agents/skills/51job-search/SKILL.md) are enabled after live Hangzhou Java
+search/full-description/cache tests on 2026-10-27. Public jobs work without prior
+login: 智联 uses anonymous public HTML for search and details; 前程无忧 uses ordinary
+Chrome pages. For browser-backed searches, run the portal CLI's `open` command
+first. Login or verification is needed only when the site explicitly requests it.
+These three adapters store private browser/cache data under `job_scraper/china-portals/`.
+
 > 🎥 **Prefer to see it in action first?** [The Next New Thing did a hands-on walkthrough](https://www.youtube.com/watch?v=HoVxjMNFYv4) of how the workflow is actually used, from setup to a finished application (recorded August 2026 - commands may have evolved since).
 
 ### 1. Fork and clone

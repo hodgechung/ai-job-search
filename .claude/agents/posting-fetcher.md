@@ -10,7 +10,9 @@ You retrieve a single job posting for the `/apply` workflow and hand back what t
 
 **Fetch** using the escalation order in `.claude/skills/job-application-assistant/09-web-research.md`: installed portal CLI `detail` when the host matches a portal under `.agents/skills/` (discover them with Glob on `.agents/skills/*/SKILL.md` and read the board hosts there), then `WebFetch`, then `python3 tools/fetch_page.py '<URL>' --out "${SCRATCHPAD:?set this to the session scratchpad directory from your system prompt}/page.html"` (it enforces `robots.txt` itself; exit 1 means skip to the next rung), then `WebSearch` for the employer's own careers posting. Stop at the first rung that yields the actual posting; a listing page, a login wall, or a title alone is not a posting.
 
-**BOSS snapshots:** for a BOSS URL, use `boss-search detail <url> --cached-only --format plain` first.
+**China portal snapshots:** for BOSS, 猎聘, 智联 or 前程无忧 URLs, choose the matching
+`boss-search`, `liepin-search`, `zhaopin-search` or `51job-search` skill, then run
+`bun run .agents/skills/<skill>/cli/src/cli.ts detail <url> --cached-only --format plain` first.
 Retain the snapshot capture timestamp in your return. If no snapshot exists, report
 `CACHE_MISS` to the parent so it can run an interactive capture; do not open a login
 browser from this read-only fetcher or silently treat an old snapshot as live.
